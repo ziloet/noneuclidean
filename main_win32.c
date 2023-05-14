@@ -42,7 +42,7 @@ create_window(void)
 	WindowClass.lpfnWndProc = WindowProc;
 	WindowClass.hInstance = Instance;
 	RegisterClassExW(&WindowClass);
-	DWORD WindowStyle = WS_OVERLAPPED | WS_VISIBLE;
+	DWORD WindowStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
 	RECT WindowRect = {0, 0, 1280, 720};
 	AdjustWindowRect(&WindowRect, WindowStyle, 0);
 	LONG WindowWidth = WindowRect.right - WindowRect.left;
