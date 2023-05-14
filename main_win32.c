@@ -27,7 +27,20 @@ disable_dpi_scaling(void)
 static LRESULT CALLBACK
 WindowProc(HWND Window, UINT Message, WPARAM wParam, LPARAM lParam)
 {
-	LRESULT Result = DefWindowProcW(Window, Message, wParam, lParam);
+	LRESULT Result = 0;
+	switch(Message)
+	{
+		case WM_CLOSE:
+		case WM_DESTROY:
+		{
+			PostQuitMessage(0);	
+		} break;
+
+		default:
+		{
+			Result = DefWindowProcW(Window, Message, wParam, lParam);
+		}
+	}
 	return Result;
 }
 
