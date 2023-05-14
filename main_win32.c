@@ -1,7 +1,12 @@
 #include<windows.h>
 
-#define Assert(Condition) if(Condition); else __debugbreak()
+#include"main_win32.h"
+#include"khrplatform.h"
+#include"opengl.h"
 
+#include"opengl.c"
+
+static GLint OcclusionCullingSupported;
 
 static void
 disable_dpi_scaling(void)
@@ -65,10 +70,24 @@ create_window(void)
 	return Result;
 }
 
+static void
+InitializeOpenGL(void)
+{
+	glClearColor(0.6f, 0.9f, 1.0f, 1.0f);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glDepthMask(GL_TRUE);
+}
+
 void WinMainCRTStartup()
 {
 	disable_dpi_scaling();
 	HWND Window = create_window();
+	SetOpenGLContext(Window);
+	LoadOpenGLFunctions();
+	InitializeOpenGL();
 	for(;;)
 	{
 		MSG Message;
