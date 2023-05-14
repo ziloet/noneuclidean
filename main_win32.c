@@ -56,4 +56,14 @@ void WinMainCRTStartup()
 {
 	disable_dpi_scaling();
 	HWND Window = create_window();
+	for(;;)
+	{
+		MSG Message;
+		GetMessageW(&Message, 0, 0, 0);
+		if(Message.message == WM_QUIT)
+		{
+			ExitProcess(0);
+		}
+		DispatchMessageW(&Message);
+	}
 }
