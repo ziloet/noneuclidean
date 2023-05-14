@@ -10,6 +10,6 @@ if not exist %build_dir% (
 pushd %build_dir%
 set msvc_flags=/nologo /Zi /W3 /Fe:"main_win32.exe"
 set link_flags=/subsystem:windows /WX /opt:ref /opt:icf /incremental:no
-set libs_to_link=kernel32.lib user32.lib opengl32.lib
+set libs_to_link=kernel32.lib user32.lib opengl32.lib gdi32.lib
 call cl %msvc_flags% %files_to_compile% /link %link_flags% %libs_to_link%
 popd
