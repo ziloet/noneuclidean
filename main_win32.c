@@ -81,6 +81,22 @@ InitializeOpenGL(void)
 	glDepthMask(GL_TRUE);
 }
 
+static void
+setup_input(HWND Window)
+{
+	enum
+	{
+		HID_USAGE_PAGE_GENERIC = 0x01,
+		HID_USAGE_GENERIC_MOUSE = 0x02,
+	};
+	RAWINPUTDEVICE Mouse = {0};
+	Mouse.usUsagePage = HID_USAGE_PAGE_GENERIC;
+	Mouse.usUsage = HID_USAGE_GENERIC_MOUSE;
+	Mouse.dwFlags = RIDEV_INPUTSINK;
+	Mouse.hwndTarget = Window;
+	RegisterRawInputDevices(&Mouse, 1, sizeof(Mouse));
+}
+
 void WinMainCRTStartup()
 {
 	disable_dpi_scaling();
@@ -88,6 +104,8 @@ void WinMainCRTStartup()
 	SetOpenGLContext(Window);
 	LoadOpenGLFunctions();
 	InitializeOpenGL();
+	setup_input(Window);
+
 	for(;;)
 	{
 		MSG Message;
