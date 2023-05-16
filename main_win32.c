@@ -97,6 +97,20 @@ setup_input(HWND Window)
 	RegisterRawInputDevices(&Mouse, 1, sizeof(Mouse));
 }
 
+static void
+ProcessWindowsMessages(void)
+{
+	MSG Message;
+	while(PeekMessageW(&Message, 0, 0, 0, PM_REMOVE))
+	{
+		if(Message.message == WM_QUIT)
+		{
+			ExitProcess(0);
+		}
+		DispatchMessageW(&Message);
+	}
+}
+
 void WinMainCRTStartup()
 {
 	disable_dpi_scaling();
@@ -108,12 +122,6 @@ void WinMainCRTStartup()
 
 	for(;;)
 	{
-		MSG Message;
-		GetMessageW(&Message, 0, 0, 0);
-		if(Message.message == WM_QUIT)
-		{
-			ExitProcess(0);
-		}
-		DispatchMessageW(&Message);
+		ProcessWindowsMessages();
 	}
 }
