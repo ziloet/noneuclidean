@@ -38,7 +38,7 @@ WindowProc(HWND Window, UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_CLOSE:
 		case WM_DESTROY:
 		{
-			PostQuitMessage(0);	
+			PostQuitMessage(0);
 		} break;
 
 		default:
