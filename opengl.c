@@ -6,7 +6,7 @@ static struct
 } OpenGLVersion;
 
 static void
-SetOpenGLContext(HWND Window)
+SetOpenGLContext(HDC WindowDC)
 {
 	PIXELFORMATDESCRIPTOR PFD = {0};
 	PFD.nSize = sizeof(PFD);
@@ -17,13 +17,12 @@ SetOpenGLContext(HWND Window)
 	PFD.cDepthBits = 24;
 	PFD.cStencilBits = 8;
 	PFD.iLayerType = PFD_MAIN_PLANE;
-	HDC DeviceContext = GetDC(Window);
-	int PixelFormat = ChoosePixelFormat(DeviceContext, &PFD);
-	SetPixelFormat(DeviceContext, PixelFormat, &PFD);
-	DescribePixelFormat(DeviceContext, PixelFormat, sizeof(PFD), &PFD);
-	HGLRC OpenGLContext = wglCreateContext(DeviceContext);
+	int PixelFormat = ChoosePixelFormat(WindowDC, &PFD);
+	SetPixelFormat(WindowDC, PixelFormat, &PFD);
+	DescribePixelFormat(WindowDC, PixelFormat, sizeof(PFD), &PFD);
+	HGLRC OpenGLContext = wglCreateContext(WindowDC);
 	Assert(OpenGLContext);
-	wglMakeCurrent(DeviceContext, OpenGLContext);
+	wglMakeCurrent(WindowDC, OpenGLContext);
 }
 
 static void*

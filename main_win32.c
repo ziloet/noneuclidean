@@ -115,7 +115,8 @@ void WinMainCRTStartup()
 {
 	disable_dpi_scaling();
 	HWND Window = create_window();
-	SetOpenGLContext(Window);
+	HDC WindowDC = GetDC(Window);
+	SetOpenGLContext(WindowDC);
 	LoadOpenGLFunctions();
 	InitializeOpenGL();
 	setup_input(Window);
